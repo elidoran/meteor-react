@@ -5,8 +5,10 @@ Package.describe({
   git: "https://github.com/grovelabs/meteor-react/"
 });
 
-var reactPath = 'vendor/react-with-addons-';
-var reactVersion = "0.13.3";
+// get `react` npm module
+Npm.depends({
+  'react':'0.13.3'
+});
 
 Package.onUse( function(api) {
   api.versionsFrom('METEOR@1.1');
@@ -18,6 +20,8 @@ Package.onUse( function(api) {
     'underscore'
   ], 'client');
 
+  var reactPath = '.npm/package/node_modules/react/dist/react-with-addons';
+
   if (process.argv[2] === 'build') {
     // The difference between development and production
     // versions of React is more than just minification. There are also
@@ -25,9 +29,9 @@ Package.onUse( function(api) {
     // production version when built from source with NPM.
     // Since we can't do that we check if we're building the app
     // for production and load the pre-built version
-    api.addFiles( reactPath + reactVersion + '.min.js');
+    api.addFiles( reactPath + '.min.js');
   } else {
-    api.addFiles( reactPath + reactVersion + '.js');
+    api.addFiles( reactPath + '.js');
   }
 
   api.addFiles([
